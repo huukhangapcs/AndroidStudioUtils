@@ -75,13 +75,10 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         frame = inputFrame.rgba();
-        if (counter % 2 ==0)
-        {
-            Core.flip(frame,frame, 1);
-            Imgproc.cvtColor(frame,frame, Imgproc.COLOR_RGBA2GRAY);
-        }
-        counter++;
-        return frame;
+         Mat frameT = frame.t();
+        Core.flip(frame.t(), frameT, 1);
+        Imgproc.resize(frameT, frameT, frame.size());
+        return frameT;
     }
 
     @Override
